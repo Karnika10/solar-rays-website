@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f7f6;
+            margin: 0;
+        }
+        .payment-card {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        h2 { color: #333; }
+        p { color: #666; margin-bottom: 25px; }
+        .checkout-btn {
+            display: inline-block;
+            background-color: #635bff; /* Stripe Purple */
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+        .checkout-btn:hover { background-color: #0a2540; }
+        .back-link { display: block; margin-top: 15px; color: #0070f3; text-decoration: none; font-size: 14px; }
+    </style>
+</head>
+<body>
 
+    <div class="payment-card">
+        <h2>Complete Your Purchase</h2>
+        <p>Securely process your payment using Stripe.</p>
+        
+        <a href="https://buy.stripe.com/your_actual_stripe_link_here" class="checkout-btn">Pay Now</a>
+        
+        <a href="index.html" class="back-link">← Go Back Home</a>
+    </div>
+
+</body>
+</html>
