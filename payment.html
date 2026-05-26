@@ -3,52 +3,275 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Your Payment</title>
+    <title>Secure Payment - Solar Rays</title>
     <style>
+        :root {
+            --primary-color: #0284c7; /* Professional Ocean Blue */
+            --accent-color: #f59e0b;  /* Warm Solar Amber */
+            --text-dark: #1e293b;
+            --bg-light: #f8fafc;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+            margin: 0;
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #f4f7f6;
-            margin: 0;
+            min-height: 100vh;
+            color: var(--text-dark);
         }
-        .payment-card {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: center;
-            max-width: 400px;
+
+        .payment-container {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
             width: 100%;
+            max-width: 480px;
+            overflow: hidden;
+            animation: fadeIn 0.5s ease-out;
         }
-        h2 { color: #333; }
-        p { color: #666; margin-bottom: 25px; }
-        .checkout-btn {
-            display: inline-block;
-            background-color: #635bff; /* Stripe Purple */
+
+        .payment-header {
+            background: linear-gradient(135deg, var(--primary-color), #0369a1);
             color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 5px;
-            transition: background 0.2s;
+            padding: 30px 20px;
+            text-align: center;
         }
-        .checkout-btn:hover { background-color: #0a2540; }
-        .back-link { display: block; margin-top: 15px; color: #0070f3; text-decoration: none; font-size: 14px; }
+
+        .payment-header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .payment-header p {
+            margin: 8px 0 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        /* Tabs Styling */
+        .payment-tabs {
+            display: flex;
+            background: #f1f5f9;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: none;
+            font-size: 15px;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            background: #ffffff;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        /* Content Styling */
+        .payment-body {
+            padding: 30px 24px;
+        }
+
+        .tab-content {
+            display: none;
+            text-align: center;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: slideUp 0.4s ease;
+        }
+
+        /* UPI Styling */
+        .qr-box {
+            background: #ffffff;
+            border: 2px dashed #cbd5e1;
+            padding: 15px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .qr-box img {
+            width: 200px;
+            height: 200px;
+            display: block;
+        }
+
+        .upi-id {
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 15px;
+            color: #334155;
+            display: inline-block;
+            margin-bottom: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Bank Details Styling */
+        .bank-details-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .bank-details-table tr {
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .bank-details-table td {
+            padding: 12px 8px;
+            font-size: 14px;
+        }
+
+        .bank-details-table td.label {
+            color: #64748b;
+            font-weight: 500;
+            width: 40%;
+        }
+
+        .bank-details-table td.value {
+            color: var(--text-dark);
+            font-weight: 600;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .notice {
+            background: #fffbeb;
+            border-left: 4px solid var(--accent-color);
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #92400e;
+            text-align: left;
+            margin-top: 20px;
+            line-height: 1.5;
+        }
+
+        .footer-nav {
+            text-align: center;
+            padding: 20px;
+            background: #f8fafc;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .back-btn {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .back-btn:hover {
+            color: var(--primary-color);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
-    <div class="payment-card">
-        <h2>Complete Your Purchase</h2>
-        <p>Securely process your payment using Stripe.</p>
-        
-        <a href="https://buy.stripe.com/your_actual_stripe_link_here" class="checkout-btn">Pay Now</a>
-        
-        <a href="index.html" class="back-link">← Go Back Home</a>
+    <div class="payment-container">
+        <div class="payment-header">
+            <h2>Checkout & Payment</h2>
+            <p>Choose your preferred secure payment route</p>
+        </div>
+
+        <div class="payment-tabs">
+            <button class="tab-btn active" onclick="switchTab(event, 'upi-tab')">UPI Payment</button>
+            <button class="tab-btn" onclick="switchTab(event, 'bank-tab')">Bank Transfer (NEFT/RTGS)</button>
+        </div>
+
+        <div class="payment-body">
+            
+            <div id="upi-tab" class="tab-content active">
+                <p style="margin-top:0; color:#64748b; font-size:14px;">Scan the QR code using any UPI App (GPay, PhonePe, Paytm)</p>
+                <div class="qr-box">
+                    <img src="img/upi-qr.png" alt="UPI QR Code">
+                </div>
+                <div>
+                    <span class="upi-id">yourname@upi</span>
+                </div>
+                <p style="font-size: 12px; color: #94a3b8; margin: 0;">Verified Secure Merchant Transfer</p>
+            </div>
+
+            <div id="bank-tab" class="tab-content">
+                <p style="margin-top:0; color:#64748b; font-size:14px;">Transfer directly using Net Banking (IMPS, NEFT, RTGS)</p>
+                
+                <table class="bank-details-table">
+                    <tr>
+                        <td class="label">Account Name</td>
+                        <td class="value" style="font-family: inherit;">Solar Rays Enterprises</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Bank Name</td>
+                        <td class="value" style="font-family: inherit;">HDFC Bank Ltd.</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Account Number</td>
+                        <td class="value">50200012345678</td>
+                    </tr>
+                    <tr>
+                        <td class="label">IFSC Code</td>
+                        <td class="value">HDFC0001234</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Account Type</td>
+                        <td class="value" style="font-family: inherit;">Current Account</td>
+                    </tr>
+                </table>
+
+                <div class="notice">
+                    <strong>Important Note:</strong> Please share a screenshot of the payment confirmation receipt along with your Order/Reference details via email or WhatsApp to activate your services.
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer-nav">
+            <a href="index.html" class="back-btn">← Cancel and Go Back Home</a>
+        </div>
     </div>
+
+    <script>
+        function switchTab(event, tabId) {
+            // Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Remove active status from all buttons
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Show current targeted tab and add active class to clicked button
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 
 </body>
 </html>
