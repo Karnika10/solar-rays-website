@@ -4,192 +4,311 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Payment - Solar Rays</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         :root {
-            --primary-color: #0284c7; /* Professional Ocean Blue */
-            --accent-color: #f59e0b;  /* Warm Solar Amber */
-            --text-dark: #1e293b;
-            --bg-light: #f8fafc;
+            --primary: #0284c7;
+            --primary-dark: #0369a1;
+            --accent: #f59e0b;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #e0f2fe 0%, #f0fdf4 100%);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at top left, #f0fdf4 0%, #e0f2fe 40%, #f8fafc 100%);
             margin: 0;
-            padding: 20px;
+            padding: 16px;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: var(--text-dark);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
         }
 
         .payment-container {
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            background: var(--bg-card);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px -15px rgba(2, 132, 199, 0.12), 0 0 0 1px rgba(2, 132, 199, 0.04);
             width: 100%;
-            max-width: 480px;
+            max-width: 460px;
             overflow: hidden;
-            animation: fadeIn 0.5s ease-out;
+            animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .payment-header {
-            background: linear-gradient(135deg, var(--primary-color), #0369a1);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
-            padding: 30px 20px;
+            padding: 32px 24px;
             text-align: center;
+            position: relative;
+        }
+
+        .payment-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 12px;
+            background: var(--bg-card);
+            clip-path: ellipse(60% 100% at 50% 100%);
         }
 
         .payment-header h2 {
             margin: 0;
-            font-size: 24px;
-            font-weight: 600;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
         }
 
         .payment-header p {
-            margin: 8px 0 0 0;
-            opacity: 0.9;
-            font-size: 14px;
+            margin: 6px 0 0 0;
+            opacity: 0.85;
+            font-size: 13px;
+            font-weight: 400;
         }
 
-        /* Tabs Styling */
+        /* Tabs Navigation */
         .payment-tabs {
             display: flex;
-            background: #f1f5f9;
-            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+            padding: 6px;
+            margin: 20px 24px 0 24px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
         }
 
         .tab-btn {
             flex: 1;
-            padding: 15px;
+            padding: 12px 8px;
             border: none;
-            background: none;
-            font-size: 15px;
+            background: transparent;
+            font-size: 14px;
             font-weight: 600;
-            color: #64748b;
+            color: var(--text-muted);
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
+            border-radius: 10px;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn i {
+            font-size: 15px;
         }
 
         .tab-btn.active {
-            color: var(--primary-color);
+            color: var(--primary);
             background: #ffffff;
-            border-bottom: 3px solid var(--primary-color);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
         }
 
-        /* Content Styling */
+        /* Body & Content */
         .payment-body {
-            padding: 30px 24px;
+            padding: 24px;
         }
 
         .tab-content {
             display: none;
-            text-align: center;
         }
 
         .tab-content.active {
             display: block;
-            animation: slideUp 0.4s ease;
+            animation: fadeIn 0.3s ease;
         }
 
-        /* UPI Styling */
+        .tab-instruction {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin: 0 0 20px 0;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        /* UPI Styling Card */
+        .upi-wrapper {
+            text-align: center;
+        }
+
         .qr-box {
             background: #ffffff;
-            border: 2px dashed #cbd5e1;
-            padding: 15px;
-            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            border-radius: 20px;
             display: inline-block;
-            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
         }
 
         .qr-box img {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             display: block;
+            border-radius: 8px;
         }
 
-        .upi-id {
-            background: #f1f5f9;
-            padding: 10px;
-            border-radius: 8px;
+        /* Copyable Field Layout */
+        .copyable-field {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            padding: 10px 14px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 260px;
+            margin: 0 auto 12px auto;
+        }
+
+        .field-value {
             font-family: monospace;
             font-size: 15px;
-            color: #334155;
-            display: inline-block;
-            margin-bottom: 10px;
-            border: 1px solid #e2e8f0;
-        }
-
-        /* Bank Details Styling */
-        .bank-details-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            margin-top: 10px;
-        }
-
-        .bank-details-table tr {
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        .bank-details-table td {
-            padding: 12px 8px;
-            font-size: 14px;
-        }
-
-        .bank-details-table td.label {
-            color: #64748b;
-            font-weight: 500;
-            width: 40%;
-        }
-
-        .bank-details-table td.value {
-            color: var(--text-dark);
             font-weight: 600;
-            font-family: 'Courier New', Courier, monospace;
+            color: #334155;
         }
 
+        .copy-btn {
+            background: transparent;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 14px;
+            transition: transform 0.1s ease;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* Premium Table List for Bank Info */
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-item {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 14px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            position: relative;
+        }
+
+        .info-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .info-item .inline-copy {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        /* Dynamic Feedback Notice */
         .notice {
             background: #fffbeb;
-            border-left: 4px solid var(--accent-color);
-            padding: 12px;
-            border-radius: 4px;
+            border: 1px solid #fef3c7;
+            padding: 14px;
+            border-radius: 14px;
             font-size: 12px;
             color: #92400e;
-            text-align: left;
-            margin-top: 20px;
+            margin-top: 24px;
+            display: flex;
+            gap: 10px;
             line-height: 1.5;
         }
 
+        .notice i {
+            font-size: 16px;
+            margin-top: 2px;
+        }
+
+        /* Footer */
         .footer-nav {
             text-align: center;
             padding: 20px;
             background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--border-color);
         }
 
         .back-btn {
-            color: #64748b;
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.2s;
+            font-size: 13px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s ease;
         }
 
         .back-btn:hover {
-            color: var(--primary-color);
+            color: var(--primary);
         }
 
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Toast Notification Configuration */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #0f172a;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 500;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            opacity: 0;
         }
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Micro-Animations */
+        @keyframes scaleUp {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
@@ -197,83 +316,110 @@
 
     <div class="payment-container">
         <div class="payment-header">
-            <h2>Checkout & Payment</h2>
-            <p>Choose your preferred secure payment route</p>
+            <h2>Secure Checkout</h2>
+            <p>Select a payment route to finish your request</p>
         </div>
 
         <div class="payment-tabs">
-            <button class="tab-btn active" onclick="switchTab(event, 'upi-tab')">UPI Payment</button>
-            <button class="tab-btn" onclick="switchTab(event, 'bank-tab')">Bank Transfer (NEFT/RTGS)</button>
+            <button class="tab-btn active" onclick="switchTab(event, 'upi-tab')">
+                <i class="fa-solid fa-qrcode"></i> UPI Transfer
+            </button>
+            <button class="tab-btn" onclick="switchTab(event, 'bank-tab')">
+                <i class="fa-solid fa-building-columns"></i> Bank Details
+            </button>
         </div>
 
         <div class="payment-body">
             
             <div id="upi-tab" class="tab-content active">
-                <p style="margin-top:0; color:#64748b; font-size:14px;">Scan the QR code using any UPI App (GPay, PhonePe, Paytm)</p>
-                <div class="qr-box">
-                    <img src="img/QR.jpg" alt="UPI QR Code">
+                <p class="tab-instruction">Scan this barcode image inside any authorized Indian banking engine (GPay, PhonePe, Paytm, BHIM).</p>
+                <div class="upi-wrapper">
+                    <div class="qr-box">
+                        <img src="img/QR.jpg" alt="UPI QR Code">
+                    </div>
+                    
+                    <div class="copyable-field">
+                        <span class="field-value" id="upi-string">karnika10@axisb</span>
+                        <button class="copy-btn" onclick="copyText('upi-string', 'UPI ID')" title="Copy UPI ID">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+                    <p style="font-size: 11px; color: var(--text-muted); margin: 12px 0 0 0;"><i class="fa-solid fa-shield-halved" style="color: #22c55e;"></i> Encrypted Peer-to-Peer Processing</p>
                 </div>
-                <div>
-                    <span class="upi-id">karnika10@axisb</span>
-                </div>
-                <p style="font-size: 12px; color: #94a3b8; margin: 0;">Verified Secure Merchant Transfer</p>
             </div>
 
             <div id="bank-tab" class="tab-content">
-                <p style="margin-top:0; color:#64748b; font-size:14px;">Transfer directly using Net Banking (IMPS, NEFT, RTGS)</p>
+                <p class="tab-instruction">Execute manual settlement through immediate NetBanking options (IMPS / NEFT / RTGS).</p>
                 
-                <table class="bank-details-table">
-                    <tr>
-                        <td class="label">Account Name</td>
-                        <td class="value" style="font-family: inherit;">SOLAR RAYS ENERGY SOLUTIONS LLP</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Bank Name</td>
-                        <td class="value" style="font-family: inherit;">Bank of Baroda</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Branch</td>
-                        <td class="value" style="font-family: inherit;">Transport Nagar, Lucknow</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Account Number</td>
-                        <td class="value">49760200000606</td>
-                    </tr>
-                    <tr>
-                        <td class="label">IFSC Code</td>
-                        <td class="value">BARB0TRALUC</td>
-                    </tr>
-                    <tr>
-                        <td class="label">Account Type</td>
-                        <td class="value" style="font-family: inherit;">Current Account</td>
-                    </tr>
-                </table>
+                <div class="info-list">
+                    <div class="info-item">
+                        <div class="info-label">Account Name</div>
+                        <div class="info-value">SOLAR RAYS ENERGY SOLUTIONS LLP</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Bank Name & Branch</div>
+                        <div class="info-value">Bank of Baroda — Transport Nagar, Lucknow</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Account Number</div>
+                        <div class="info-value" id="acc-num" style="font-family: monospace; font-size:16px;">49760200000606</div>
+                        <button class="inline-copy" onclick="copyText('acc-num', 'Account Number')">Copy</button>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">IFSC Code</div>
+                        <div class="info-value" id="ifsc-num" style="font-family: monospace; font-size:16px;">BARBOTRALUC</div>
+                        <button class="inline-copy" onclick="copyText('ifsc-num', 'IFSC Code')">Copy</button>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Account Type</div>
+                        <div class="info-value">Current Account</div>
+                    </div>
+                </div>
+            </div>
 
-                <div class="notice">
-                    <strong>Important Note:</strong> Please share a screenshot of the payment confirmation receipt along with your Order/Reference details via email or WhatsApp to activate your services.
+            <div class="notice">
+                <i class="fa-solid fa-circle-info"></i>
+                <div>
+                    <strong>Action Required:</strong> Take a quick snapshot of your verified checkout transaction screen. Send it via chat or email alongside your metadata log to finalize the provisioning steps.
                 </div>
             </div>
 
         </div>
 
         <div class="footer-nav">
-            <a href="index.html" class="back-btn">← Cancel and Go Back Home</a>
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Abort & Return Home</a>
         </div>
     </div>
 
+    <div class="toast" id="toast-notif">Copied to clipboard!</div>
+
     <script>
         function switchTab(event, tabId) {
-            // Hide all tab contents
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
 
-            // Remove active status from all buttons
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach(tab => tab.classList.remove('active'));
-
-            // Show current targeted tab and add active class to clicked button
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
+        }
+
+        function copyText(elementId, labelName) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast(`${labelName} copied successfully!`);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-notif');
+            toast.innerText = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
         }
     </script>
 
