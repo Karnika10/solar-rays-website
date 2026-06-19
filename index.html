@@ -349,27 +349,46 @@
 
                 <div class="card border p-4 p-sm-5 rounded-4 shadow-sm bg-white">
                     <h5 class="fw-bold mb-4 text-center">Send Us a Quick Message</h5>
-                    <form>
-                        <div class="text-center p-4 border rounded-4 bg-light shadow-sm">
-    <h5 class="fw-bold mb-3">Connect Instantly on WhatsApp</h5>
-    <p class="text-secondary small mb-4">Skip the form entirely! Click below to chat directly with our solar installation experts regarding your quote or subsidy questions.</p>
-    
-    <div class="d-flex flex-column gap-2 max-width-xs mx-auto" style="max-width: 280px;">
-        <a href="https://wa.me/919005093327?text=Hello%20Solar%20Rays!%20I%20visited%20your%20website%20and%20want%20to%20get%20a%20free%20solar%20consultation." 
-           target="_blank" 
-           class="btn btn-success btn-lg fw-semibold py-2.5 w-100" 
-           style="background-color: #25D366; border-color: #25D366;">
-            <i class="fa-brands fa-whatsapp me-2"></i> Chat with Executive 1
-        </a>
-        <a href="https://wa.me/919936533017?text=Hello%20Solar%20Rays!%20I%20visited%20your%20website%20and%20want%20to%20get%20a%20free%20solar%20consultation." 
-           target="_blank" 
-           class="btn btn-success btn-lg fw-semibold py-2.5 w-100" 
-           style="background-color: #25D366; border-color: #25D366;">
-            <i class="fa-brands fa-whatsapp me-2"></i> Chat with Executive 2
-        </a>
+                    <form id="whatsappForm" onsubmit="sendToWhatsApp(event)">
+    <div class="row g-3">
+        <div class="col-sm-6">
+            <input type="text" id="clientName" class="form-control py-2.5" placeholder="Your Name" required>
+        </div>
+        <div class="col-sm-6">
+            <input type="tel" id="clientPhone" class="form-control py-2.5" placeholder="Your Phone Number" required>
+        </div>
+        <div class="col-12">
+            <textarea id="clientMessage" class="form-control py-2.5" rows="4" placeholder="Enter your city/requirement (e.g., Want 3kW Solar Panel in Lucknow)" required></textarea>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-success w-100 fw-semibold py-2.5" style="background-color: #25D366; border-color: #25D366;">
+                <i class="fa-brands fa-whatsapp me-2"></i>Send via WhatsApp
+            </button>
+        </div>
     </div>
-</div>
-                    </form>
+</form>
+
+<script>
+function sendToWhatsApp(event) {
+    event.preventDefault();
+
+    // Executive 1 updated target number
+    const phoneNumber = "919936533017"; 
+
+    const name = document.getElementById('clientName').value;
+    const phone = document.getElementById('clientPhone').value;
+    const message = document.getElementById('clientMessage').value;
+
+    const textMessage = `Hello Solar Rays! 👋%0A%0A` +
+                        `I am interested in a free solar consultation.%0A` +
+                        `*Name:* ${encodeURIComponent(name)}%0A` +
+                        `*Phone:* ${encodeURIComponent(phone)}%0A` +
+                        `*Requirement:* ${encodeURIComponent(message)}`;
+
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${textMessage}`;
+    window.open(whatsappUrl, '_blank');
+}
+                    </script>              
                 </div>
             </div>
         </div>
